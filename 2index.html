@@ -1,0 +1,1207 @@
+r
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Justo fluido!</title>
+  
+  
+  
+  
+
+  <style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 10px;
+}
+
+#app-container {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 1rem;
+    animation: rainbow 6s linear infinite alternate, pulsate 1.5s infinite alternate;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7),
+                 0 0 20px rgba(0, 255, 0, 0.7),
+                 0 0 30px rgba(0, 255, 255, 0.7),
+                 0 0 40px rgba(0, 255, 255, 0.7);
+}
+
+h2, h3 {
+    margin: 1rem 0;
+    color: #00FFFF;
+    text-shadow: 0 0 5px #00FFFF;
+}
+
+.input-group {
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+label {
+    width: 30%;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #00FF00;
+}
+
+input[type="number"] {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #00FF00;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #222;
+    color: white;
+}
+
+button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+}
+
+button:disabled {
+    background-color: #333;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#text-container {
+    margin-top: 1rem;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px;
+    border: 1px solid #00FF00;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1em;
+    background-color: #222;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* DRAMATICALLY IMPROVED FLASHCARD STYLING */
+#quiz-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    background-color: #111;
+    border-radius: 10px;
+    border: 2px solid #00FF00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    padding: 20px 10px;
+    margin: -10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#word-display {
+    font-size: 3.5rem;
+    text-align: center;
+    margin: 2rem auto;
+    min-height: 300px;
+    font-weight: bold;
+    background-color: #222;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 500px;
+    padding: 40px;
+    border-left: 10px solid #00FF00;
+    border-right: 10px solid #00FFFF;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #00FF00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+}
+
+#word-display:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+#counter {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00FFFF;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid #00FFFF;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 2rem auto;
+    width: 95%;
+    max-width: 500px;
+}
+
+.button-container button {
+    flex: 1;
+    padding: 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+#yes-btn {
+    background-color: #00AA00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+}
+
+#yes-btn:hover {
+    background-color: #00CC00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+}
+
+#yes-btn:active {
+    background-color: #008800;
+    transform: translateY(2px);
+}
+
+#no-btn {
+    background-color: #AA0000;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+}
+
+#no-btn:hover {
+    background-color: #CC0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+}
+
+#no-btn:active {
+    background-color: #880000;
+    transform: translateY(2px);
+}
+
+#yes-percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem 0;
+    color: #00FF00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+}
+
+#no-words {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+    border: 1px solid ;
+    }
+    
+    
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    border: 1px solid white;
+    background-color: #111; /* Dark background */
+}
+
+th, td {
+    border: 1px solid #444;
+    padding: 12px;
+    text-align: left;
+    color: white; /* Ensures text is visible */
+    background-color: #111; /* Makes cell background dark */
+}
+
+th {
+    background-color: rgba(0, 255, 255, 0.2); /* Slightly brighter for headers */
+    color: #00FFFF; /* Bright header text */
+    font-weight: bold;
+    }
+    
+    
+    
+    
+    label[for="start-row"],
+input#start-row,
+label[for="end-row"],
+input#end-row {
+  display: none !important;
+}
+    
+    
+    
+    
+    select#day-selector {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #4a90e2; /* nice blue border */
+  background-color: #f0f8ff; /* light blue background */
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(74, 144, 226, 0.2);
+}
+
+select#day-selector:hover {
+  border-color: #357ABD;
+  box-shadow: 0 4px 10px rgba(53, 122, 189, 0.4);
+}
+
+select#day-selector:focus {
+  border-color: #285D9F;
+  box-shadow: 0 0 8px rgba(40, 93, 159, 0.7);
+}
+    
+    
+    
+    
+    select#daySelector {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #4a90e2; /* nice blue border */
+  background-color: #f0f8ff; /* light blue background */
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(74, 144, 226, 0.2);
+}
+
+select#day-selector:hover {
+  border-color: #357ABD;
+  box-shadow: 0 4px 10px rgba(53, 122, 189, 0.4);
+}
+
+select#day-selector:focus {
+  border-color: #285D9F;
+  box-shadow: 0 0 8px rgba(40, 93, 159, 0.7);
+}
+    
+    
+    
+    
+    
+    
+  
+    
+  </style>
+  
+  
+</head>
+<body>
+  
+
+<!-- Login/Register Screen (disabled) -->
+<!--
+<div id="auth-container" style="display: block;">
+  <div id="login-form" style="max-width: 300px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+    <h2>Iniciar sesión</h2>
+    <input type="text" id="username" placeholder="Nombre de usuario" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <input type="password" id="password" placeholder="Contraseña" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <button id="login-button" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white;">Entrar</button>
+    <p style="text-align: center; margin-top: 10px;">¿Nuevo usuario? <a href="#" id="show-register">Regístrate</a></p>
+  </div>
+
+  <div id="register-form" style="display: none; max-width: 300px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+    <h2>Registro</h2>
+    <input type="text" id="new-username" placeholder="Nombre de usuario" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <input type="email" id="email" placeholder="Correo electrónico" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <input type="password" id="new-password" placeholder="Contraseña" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <button id="register-button" style="width: 100%; padding: 10px; background-color: #2196F3; color: white;">Registrar</button>
+    <p style="text-align: center; margin-top: 10px;">¿Ya tienes cuenta? <a href="#" id="show-login">Entrar</a></p>
+  </div>
+</div>
+-->
+
+<!-- App Content -->
+<div id="app-container" style="display: block;">
+  <div id="setup-page">
+    <h1>¡Justo fluido!</h1>
+    <div class="input-group">
+      
+      
+      <label for="daySelector">Select Day:</label>
+<select id="daySelector">
+  <option value="">-- Select Day --</option>
+</select>
+      
+      
+      
+      
+      <label for="start-row">Fila de inicio:</label>
+      <input type="number" id="start-row" min="1" value="1" />
+    </div>
+    <div class="input-group">
+      <label for="end-row">Fila final:</label>
+      <input type="number" id="end-row" min="1" value="100" />
+    </div>
+    <button id="fetch-text">Obtener texto</button>
+    <div id="text-container">
+      <textarea id="text-content"></textarea>
+      <button id="analyze-text" disabled>Analizar texto</button>
+    </div>
+    <button id="open-sentence-generator" style="background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; margin-top: 20px;">
+      Generador de oraciones
+    </button>
+    <button id="open-leaderboard" style="background-color: #FF9800; color: white; padding: 10px 15px; border: none; cursor: pointer; margin-top: 10px;">
+      Ver clasificación
+    </button>
+  </div>
+  <div id="quiz-page" class="hidden">
+    <div id="word-display"></div>
+    <div id="counter">0/0</div>
+    <div class="button-container">
+      <button id="yes-btn">Sí</button>
+      <button id="no-btn">No</button>
+    </div>
+  </div>
+
+  <div id="results-page" class="hidden">
+    <h2>Resultados del cuestionario</h2>
+    <div id="yes-percentage"></div>
+    <h3>Palabras que necesitas repasar:</h3>
+    <p id="no-words"></p>
+    <h3>Tiempos de respuesta (de más lento a más rápido):</h3>
+    <div id="table-container">
+      <table id="timing-table">
+        <thead>
+          <tr>
+            <th>Palabra</th>
+            <th>Tiempo (ms)</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      
+      
+      <button id="generate-pairs-btn">Ready to learn these words</button>
+<textarea id="word-pairs-output" rows="10" cols="80" readonly placeholder="Generated word pairs will appear here...">
+      </textarea>
+      <button id="copy-pairs-btn">step 1 Copy / Paso 1 Copiar</button>
+      
+      <button id="go-to-index-btn">step two Go to the Listening Table / Paso 2: Ir a La Mesa de Escucha</button>
+      
+    
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startRowInput = document.getElementById('start-row');
+    const endRowInput = document.getElementById('end-row');
+    const fetchTextBtn = document.getElementById('fetch-text');
+    const textContent = document.getElementById('text-content');
+    const analyzeTextBtn = document.getElementById('analyze-text');
+    const setupPage = document.getElementById('setup-page');
+    const quizPage = document.getElementById('quiz-page');
+    const resultsPage = document.getElementById('results-page');
+    const wordDisplay = document.getElementById('word-display');
+    const counter = document.getElementById('counter');
+    const yesBtn = document.getElementById('yes-btn');
+    const noBtn = document.getElementById('no-btn');
+    const backBtn = document.getElementById('back-btn'); // <-- NEW
+    const noWords = document.getElementById('no-words');
+    const yesPercentage = document.getElementById('yes-percentage');
+    const tableBody = document.getElementById('table-body');
+    const restartBtn = document.getElementById('restart-btn');
+
+    let allLines = [];
+    let words = [];
+    let currentWordIndex = 0;
+    let wordData = [];
+    let startTime = 0;
+
+    fetchTextBtn.addEventListener('click', function() {
+    try {
+        const embedded = document.getElementById('labelData');
+        if (!embedded) throw new Error('Embedded labelData script tag not found!');
+        const text = embedded.textContent.trim();
+        
+        allLines = text.split('\n');
+        if (endRowInput.value === '100' && allLines.length < 100) {
+            endRowInput.value = allLines.length;
+        }
+        updateTextarea();
+        analyzeTextBtn.disabled = false;
+    } catch (error) {
+        alert('Error al cargar el archivo: ' + error.message);
+    }
+});
+
+    function cleanLine(line) {
+        return line
+            .replace(/[^\p{L}\s'-]/gu, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    function updateTextarea() {
+        const startRow = parseInt(startRowInput.value);
+        const endRow = parseInt(endRowInput.value);
+        if (isNaN(startRow) || isNaN(endRow) || startRow < 1 || endRow > allLines.length || startRow > endRow) {
+            alert('Números de fila inválidos. Por favor, revisa tus entradas.');
+            return;
+        }
+        const selectedLines = allLines.slice(startRow - 1, endRow);
+        const cleanedLines = selectedLines.map(cleanLine);
+        textContent.value = cleanedLines.join('\n');
+    }
+
+    startRowInput.addEventListener('change', updateTextarea);
+    endRowInput.addEventListener('change', updateTextarea);
+
+    function isValidWord(word) {
+        const hasLetters = /[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]/.test(word);
+        const onlyLettersAndAllowedSymbols = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\-']+$/.test(word);
+        return hasLetters && onlyLettersAndAllowedSymbols;
+    }
+
+    analyzeTextBtn.addEventListener('click', function() {
+        const text = textContent.value;
+        if (!text.trim()) {
+            alert('No hay texto para analizar. Por favor, primero obtén el texto.');
+            return;
+        }
+
+        const rawWords = text.split(/[\s.,;:!?()¿¡"“”'‘’\-]+/).filter(word => word.trim() !== '');
+        words = rawWords
+            .filter(word => isValidWord(word))
+            .map(word => word.trim())
+            .filter(word => word.length > 1);
+
+        if (words.length === 0) {
+            alert('No se encontraron palabras válidas en el texto seleccionado.');
+            return;
+        }
+
+        words = [...new Set(words)];
+        currentWordIndex = 0;
+        wordData = [];
+
+        setupPage.classList.add('hidden');
+        quizPage.classList.remove('hidden');
+        showNextWord();
+    });
+
+    function showNextWord() {
+        if (currentWordIndex < words.length) {
+            const remaining = words.length - currentWordIndex;
+            counter.textContent = `${remaining}/${words.length} restantes`;
+            wordDisplay.textContent = words[currentWordIndex];
+            startTime = Date.now();
+        } else {
+            wordDisplay.textContent = "";
+            counter.textContent = "¡Completado!";
+            setTimeout(() => {
+                quizPage.classList.add('hidden');
+                resultsPage.classList.remove('hidden');
+                showResults();
+            }, 1000);
+        }
+    }
+
+    function recordAnswer(answer) {
+        const endTime = Date.now();
+        const timeTaken = endTime - startTime;
+        wordData.push({
+            word: words[currentWordIndex],
+            time: timeTaken,
+            answer: answer
+        });
+        currentWordIndex++;
+        showNextWord();
+    }
+
+    yesBtn.addEventListener('click', function() {
+        recordAnswer('sí');
+    });
+
+    noBtn.addEventListener('click', function() {
+        recordAnswer('no');
+    });
+
+    // NEW: Back button logic
+    backBtn.addEventListener('click', function() {
+        if (currentWordIndex > 0) {
+            currentWordIndex--;
+            wordData.pop();  // Remove last recorded answer
+            showNextWord();  // Show the previous word
+        } else {
+            alert("Estás en la primera palabra.");
+        }
+    });
+
+    function showResults() {
+        const yesCount = wordData.filter(item => item.answer === 'sí').length;
+        const percentage = Math.round((yesCount / wordData.length) * 100);
+        yesPercentage.textContent = `Sabías el ${percentage}% de las palabras.`;
+
+        const noWordsArray = wordData
+            .filter(item => item.answer === 'no')
+            .map(item => Array(9).fill(item.word).join(', '))
+            .join(', ');
+
+        noWords.textContent = noWordsArray.length > 0 ? noWordsArray + ',' : '¡Ninguna! Sabías todas las palabras.';
+
+        wordData.sort((a, b) => b.time - a.time);
+        tableBody.innerHTML = '';
+        wordData.forEach(item => {
+            const row = document.createElement('tr');
+            const wordCell = document.createElement('td');
+            wordCell.textContent = item.word;
+            const timeCell = document.createElement('td');
+            timeCell.textContent = item.time;
+            row.appendChild(wordCell);
+            row.appendChild(timeCell);
+            tableBody.appendChild(row);
+        });
+    }
+
+    restartBtn.addEventListener('click', function() {
+        resultsPage.classList.add('hidden');
+        setupPage.classList.remove('hidden');
+        textContent.value = '';
+        analyzeTextBtn.disabled = true;
+    });
+});
+
+
+document.getElementById("generate-pairs-btn").addEventListener("click", function () {
+  // Get the text from the #no-words element, split by commas, and trim
+  const noWordsText = document.getElementById("no-words").textContent;
+  if (!noWordsText || noWordsText === '¡Ninguna! Sabías todas las palabras.') {
+    alert("No hay palabras para generar pares.");
+    return;
+  }
+  
+  // Split and clean words, then get unique words only
+  const noWords = [...new Set(noWordsText.split(',').map(w => w.trim()).filter(w => w.length > 0))];
+  
+  // Parse the embedded dictionary from #labelData
+  const labelDataText = document.getElementById('labelData').textContent.trim();
+  const dictionary = {};
+  
+  const lines = labelDataText.split('\n');
+  lines.forEach(line => {
+    let match = line.match(/^\|?\s*\d*\s*\|?\s*([^\|\s]+)\s*\|?\s*([^\|\s]+)\s*\|?/);
+    if (match && match.length >= 3) {
+      dictionary[match[1].toLowerCase()] = match[2];
+    } else {
+      let parts = line.trim().split(/\s{2,}/);
+      if (parts.length >= 2) {
+        dictionary[parts[0].toLowerCase()] = parts[1];
+      }
+    }
+  });
+  
+  // Generate pairs with the format: "word , translation"
+  const pairs = noWords.map(word => {
+    const lowerWord = word.toLowerCase();
+    const translation = dictionary[lowerWord] || "[sin traducción]";
+    return `${word} , ${translation}`;
+  });
+  
+  // Join all pairs by comma and space in a single paragraph
+  document.getElementById('word-pairs-output').value = pairs.join(', ');
+});
+
+
+
+
+
+document.getElementById('copy-pairs-btn').addEventListener('click', function() {
+    const textArea = document.getElementById('word-pairs-output');
+    textArea.select();
+    textArea.setSelectionRange(0, 99999); // For mobile compatibility
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            alert('¡Texto copiado al portapapeles!');
+        } else {
+            alert('No se pudo copiar el texto.');
+        }
+    } catch (err) {
+        alert('Error al intentar copiar: ' + err);
+    }
+
+    // Optional: Deselect text after copying
+    window.getSelection().removeAllRanges();
+});
+
+
+
+// Populate the <select> with 90 day options
+const daySelector = document.getElementById("daySelector");
+for (let i = 1; i <= 90; i++) {
+  const option = document.createElement("option");
+  option.value = i;
+  option.textContent = "Day " + i;
+  daySelector.appendChild(option);
+}
+
+// When a day is selected, auto-fill start-row and end-row
+daySelector.addEventListener("change", function () {
+  const day = parseInt(this.value);
+  if (!isNaN(day)) {
+    const start = (day - 1) * 30 + 1;
+    const end = day * 30;
+    document.getElementById("start-row").value = start;
+    document.getElementById("end-row").value = end;
+  }
+});
+
+
+
+
+
+  document.getElementById("go-to-index-btn").addEventListener("click", function() {
+    window.location.href = '1index.html';
+  });
+
+
+
+
+
+</script>
+
+
+<script type="text/plain" id="labelData">
+la the  
+era was  
+el the  
+y and  
+luz light  
+l the  
+de of  
+que that  
+en in  
+dios God  
+verbo Word  
+testimonio testimony  
+por by  
+para for  
+las the  
+vida life  
+tinieblas darkness  
+ste this  
+principio beginning  
+no not  
+hecho made  
+diese gave  
+con with  
+vino came  
+un a  
+todos all  
+todas all  
+sino but  
+sin without  
+sido been  
+se himself  
+resplandece shines  
+nada nothing  
+mas but  
+los the  
+lo the  
+llamaba called  
+juan John  
+hubo there was  
+hombres men  
+hombre man  
+hechas made  
+ha has  
+fueron were  
+fue was  
+estaba was  
+enviado sent  
+cual which  
+creyesen believed  
+cosas things  
+comprendieron understood
+de of  
+y and  
+a to  
+que that  
+el the  
+le to him/her  
+por by  
+mundo world  
+los the  
+la the  
+l the  
+gracia grace  
+su his/her  
+no no/not  
+fue was  
+en in  
+dios God  
+del of the  
+yo I  
+voluntad will  
+viene comes  
+verdad truth  
+único unique  
+todos all  
+recibieron received  
+porque because  
+pero but  
+padre father  
+ni nor  
+hecho made  
+gloria glory  
+es is  
+era was  
+dio gave  
+carne flesh  
+vio saw  
+vino came  
+vinieron came  
+vimos we saw  
+verdadera true  
+verbo Word  
+tomamos we took  
+todo all/everything  
+testimonio testimony  
+suyos his/hers/theirs  
+suyo his/hers/theirs  
+este this  
+son are  
+sino but  
+ser to be  
+seno breast  
+sangre blood  
+quien who  
+primero first  
+potestad power  
+plenitud fullness  
+nosotros we  
+nombre name  
+nadie nobody  
+moisés Moses  
+mas but  
+luz light  
+lo the  
+lleno full  
+ley law  
+les to them  
+juan John  
+jesucristo Jesus Christ  
+jamás never  
+hombre man  
+hijos children  
+hijo son  
+hechos deeds/facts  
+habitado inhabited  
+ha has  
+estaba was  
+est is/it is  
+entre among  
+engendrados begotten  
+diciendo saying  
+después after  
+decir to say  
+dado given  
+dada given (feminine)  
+cuales which  
+creen they believe  
+conocí knew/met  
+conocer to know  
+como like/as  
+clamó cried out  
+aquí here  
+antes before  
+alumbra shines/lightens
+el the  
+y and  
+de of  
+no not  
+que that  
+eres are (you are)  
+yo I  
+tú you  
+soy am (I am)  
+no not  
+los the  
+en in  
+del of the  
+qué what  
+profeta prophet  
+le to him/her  
+el the  
+juan John  
+es is  
+dijo said  
+as so  
+a to  
+vosotros you all  
+uno one  
+respondí I responded  
+quién who  
+pues then  
+ni nor  
+me me  
+la the  
+enviaron they sent  
+dijeron they said  
+cristo Christ  
+confesó confessed  
+voz voice  
+viniendo coming  
+ti you  
+testimonio testimony  
+este this  
+sino but  
+sido been  
+si if  
+se himself/herself  
+sacerdotes priests  
+es is  
+respuesta answer  
+quién who  
+preguntaron they asked  
+preguntarle to ask him  
+preguntó asked  
+por by  
+para for  
+otro another  
+os to you (plural)  
+nos to us  
+negó denied  
+mismo himself  
+medio midst  
+mas but  
+levitas Levites  
+les to them  
+lado side  
+judá Judah  
+jordán Jordan  
+jerusalén Jerusalem  
+isaías Isaiah  
+es is  
+había there was  
+fariseos Pharisees  
+estas these  
+estaba was  
+est is/it is  
+eran were  
+enviados sent  
+entonces then  
+enderezad straighten  
+donde where  
+digno worthy  
+diciendo saying  
+dices you say  
+después after  
+desierto desert  
+desatar to untie  
+demos we give  
+cuando when  
+cuál which  
+cosas things  
+correa strap  
+conocí I knew/met  
+como like/as  
+clama cries out  
+camino way  
+calzado footwear  
+bautizo I baptize  
+bautizas you baptize  
+bautizando baptizing  
+antes before  
+aún still/yet  
+al to the  
+agua water  
+acontecieron happened
+a to  
+que that  
+el the  
+de of  
+le to him/her  
+dijo said  
+yo I  
+él he  
+Jesús Jesus  
+de of  
+este this  
+es is  
+no not  
+Juan John  
+sobre upon  
+sí yes  
+Espíritu Spirit  
+he I have  
+Espíritu Spirit  
+era was  
+dos two  
+Dios God  
+aquí here  
+aún still  
+vi I saw  
+testimonio testimony  
+tú you  
+siguiente next  
+si if  
+se himself/herself  
+quién who  
+discípulos disciples  
+primero first  
+porque because  
+por by  
+no not  
+dónde where  
+me me  
+me me  
+los the  
+lo it  
+les to them  
+interpretarás you will interpret  
+hijo son  
+hermano brother  
+había there was  
+en in  
+discípulo disciple  
+descender to descend  
+del of the  
+cordero lamb  
+conocí I knew/met  
+con with  
+como like/as  
+al to the  
+agua water  
+volví I returned  
+vio saw  
+vinieron they came  
+vine I came  
+vieron they saw  
+viene comes  
+viendo seeing  
+vez time  
+venid come (plural command)  
+ven come  
+ved see (plural command)  
+veas you see  
+varón man  
+uno one  
+un a  
+trajo brought  
+sus his  
+su his/her  
+siguieron they followed  
+ser to be  
+seguido followed  
+siguió followed  
+santo holy  
+Rabí Rabbi  
+quita takes away  
+quiere wants  
+quedaron they remained  
+qué what  
+piedra stone  
+pero but  
+permanecer to remain  
+permanece remains  
+Pedro Peter  
+pecado sin  
+para for  
+paloma dove  
+oyeron they heard  
+otra another  
+o or  
+mundo world  
+moras you dwell  
+moraba dwelt  
+mirando looking  
+miró looked  
+mes month  
+más more/but  
+manifestado manifested  
+maestro teacher  
+llamado called  
+la the  
+Jonás Jonah  
+Israel Israel  
+es is  
+hora hour  
+hemos we have  
+hallado found  
+hall find (imperative)  
+hablar to speak  
+fuese were  
+estaba was  
+eso that  
+eres are (you are)  
+envié I sent  
+entonces then  
+ellos they  
+dónde where  
+dio gave  
+dijeron they said  
+dije I said  
+diciendo saying  
+dice says  
+después after  
+decir to say  
+dado given  
+cuál which  
+Cristo Christ  
+cima top  
+cielo heaven  
+Cefas Cephas  
+buscó sought  
+bautizar to baptize  
+bautizando baptizing  
+bautiza baptizes  
+as so  
+aquel that  
+antes before  
+Andrés Andrew  
+andaba was walking  
+all there
+de of  
+y and  
+dijo said  
+le to him/her  
+a to  
+el the  
+Natanael Nathanael  
+Jesús Jesus  
+Felipe Philip  
+te you  
+la the  
+respondió answered  
+que that  
+él he  
+hijo son  
+en in  
+aquel the one  
+vi I saw  
+ver to see  
+ven come  
+tú you  
+quién who  
+Nazaret Nazareth  
+los the  
+higuera fig tree  
+halló found  
+eres are  
+Dios God  
+debajo under  
+de of  
+cierto truly  
+viendo seeing  
+verdadero true  
+ve see  
+un a  
+subiendo ascending  
+sobre upon  
+siguiente next  
+salir come out  
+Rey King  
+quiso wanted  
+puede can  
+profetas prophets  
+porque because  
+Pedro Peter  
+os to you all  
+o or  
+no not  
+ángeles angels  
+dónde where  
+Moisés Moses  
+me me  
+mayores greater  
+llamara called  
+ley law  
+José Joseph  
+israelita Israelite  
+Israel Israel  
+ir go  
+Hombre Man  
+hemos we have  
+he I have  
+hay there is  
+hallado found  
+hacia toward  
+Galilea Galilee  
+estabas you were  
+escribió wrote  
+era was  
+engaño deceit  
+dije I said  
+digo I say  
+descendiendo descending  
+del of the  
+cuando when  
+crees you believe  
+cosas things  
+conoces you know  
+ciudad city  
+cielo heaven  
+bueno good  
+Betsaida Bethsaida  
+antes before  
+Andrés Andrew  
+algo something  
+adelante onward  
+abierto open
+</script>
+
+
+
+
+</body>
+  </html>

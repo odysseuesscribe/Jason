@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spanish Listening Practice</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #00ff00;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+
+    td {
+      min-width: 120px;
+    }
+
+    td[contenteditable="true"] {
+      background-color: black;
+    }
+
+    td:nth-child(1) {
+      color: #00ff00;
+    }
+
+    td:nth-child(2) {
+      color: #80dfff;
+    }
+
+    #controls {
+      margin-bottom: 20px;
+    }
+
+    .control-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      margin-right: 6px;
+    }
+
+    input, button, select {
+      background-color: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 5px;
+      margin: 4px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  
+  
+  <button onclick="window.location.href='2index.html'">Go to quiz</button>
+  
+  <!--
+  <div id="authContainer">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="signUp()">Sign Up</button>
+  <button onclick="login()">Login</button>
+  <button onclick="logout()">Logout</button>
+  </div> -->
+  
+
+  <div style="margin-top: 1em;">
+    <h3 style="color: palegreen;">Table Library</h3>
+    <!-- <h3 style="color: white;">to save table please create a name starting with your email address, 
+       eg. ( 'email69@email.com' )</h3>
+    <input id="tableNameSave" placeholder="to save tableplease create a name starting with your email address, eg ( 'email69@email.com Table 1' )" />
+    <button onclick="saveNamedTable()">Save Table </button>
+    
+    <input id="tableNameLoad" placeholder="Table name to load" />
+    <button onclick="loadNamedTable()">Load Table</button>
+  </div>
+-->
+    
+    
+    
+  <div id="controls">
+    <div class="control-group">
+      <label for="spanishVoice">Spanish Voice:</label>
+      <select id="spanishVoice"></select>
+
+      <label for="englishVoice">English Voice:</label>
+      <select id="englishVoice"></select>
+      <label for="voiceSpeed">Voice Speed:</label>
+
+<!--
+      <label><strong>Row range:</strong></label>
+      From <input type="number" id="startRow" value="1" min="1"> 
+      to <input type="number" id="endRow" value="3" min="1">
+    </div>
+--> 
+
+
+
+
+    <div class="control-group">
+      <label><strong>Repeat each row:</strong></label>
+      <input type="number" id="repeatCount" value="2" min="1">
+    </div>
+      
+      
+      <label for="voiceSpeed">Voice Speed:</label>
+<input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1">
+      <span id="speedValue">1.0</span>
+      
+
+    <div class="control-group">
+      <button onclick="startReading()">Play</button>
+      <button onclick="pauseReading()">Pause</button>
+      <button onclick="resumeReading()">do not push this button</button>
+
+      <button onclick="addRow()">See Row Numbers</button>
+      <button onclick="addColumn()">Add Column</button>
+      <br>
+      
+      
+      
+    <div id="stopwatch" style="color:#00ff00; font-family:monospace; margin-top:10px;">
+  Time: 00:00:00
+      </div>
+      
+      
+      
+ <div style="display: flex;">
+  <div id="rowNumbers" style="text-align: right; margin-right: 10px; user-select: none;"></div>
+  <table id="wordTable">
+    <thead>
+      <tr><th>Spanish</th><th>English</th></tr>
+    </thead>
+    <tbody>
+      <tr><td contenteditable="true">Hola</td><td contenteditable="true">Hello</td></tr>
+      <tr><td contenteditable="true">Ejemplo </td><td contenteditable="true">Example</td></tr>
+      <tr><td contenteditable="true">¿Cómo estás?</td><td contenteditable="true">How are you?</td></tr>
+    </tbody>
+  </table>
+</div>
+  
+</div>
+
+    <div class="control-group">
+      <label><strong>Paste copied text:</strong></label><br>
+      <textarea id="inputText" rows="3" cols="60" style="background:black; color:#00ff00; border:1px solid #00ff00;"></textarea><br>
+      <button onclick="importFromRepeatedText(document.getElementById('inputText').value)">Import Text</button>
+    </div>
+    <label><strong>Save Table / Export</strong></label><br>
+    <textarea id="exportBox" rows="4" cols="50"
+               style="background-color: #cce6ff; color: #000000; border:1px solid #00ff00;"
+              placeholder="To Save your Table Click 'Export' your table in s specail format will appear: copy and paste somewhere to keep it safe, in your email or notes app on your device. open the app later paste it in the 'Import' box and click import just like how u loa your resuots from the Quiz ..."></textarea><br>
+    <button onclick="exportToRepeatedText()">Export Table</button>
+    
+    
+  </div>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>
+  
+  
+  
+  
+  

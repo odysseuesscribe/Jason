@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio del Proyecto</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: #00ff00; /* Neon green */
+      margin: 0;
+    }
+
+    h1 {
+      color: #00ff00; /* Glowing green */
+      text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+      margin-bottom: 20px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background-color: #000; /* Black button */
+      color: #00ff00; /* Neon green text */
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    button:hover {
+      background-color: #00ff00;
+      color: black;
+      box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenido, </h1>
+  <h1>¿Estás listo para ser fluido en 90 Dias ?</h1>
+  <button onclick="window.location.href='2index.html'"> Start </button>
+  <button onclick="window.location.href='1index.html'"> Listening </button>
+</body>
+</html>
